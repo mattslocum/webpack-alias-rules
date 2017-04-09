@@ -1,4 +1,5 @@
 const path = require('path');
+const ruleAlias = new (require("./RuleAliasPlugin"))();
 
 module.exports = {
     entry: './src/entry.js',
@@ -17,12 +18,15 @@ module.exports = {
     },
     module: {
         rules: [{
-            test: /my_cool_lib/,
-            // test: /cool-lib/, // works with this one, but I need to use alias
+            // test: /my_cool_lib/,
+            test: ruleAlias.match('my_cool_lib'),
             use: [{
                 loader: 'exports-loader',
                 options: 'MyCoolLib'
             }]
         }]
-    }
+    },
+    plugins: [
+        ruleAlias
+    ]
 };
